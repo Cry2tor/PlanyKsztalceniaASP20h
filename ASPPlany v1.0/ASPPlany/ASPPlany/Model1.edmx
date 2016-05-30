@@ -1,0 +1,582 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PlanyKsztalceniaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Katedra">
+          <Key>
+            <PropertyRef Name="id_katedra" />
+          </Key>
+          <Property Name="id_katedra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nazwa" Type="varchar" MaxLength="50" />
+          <Property Name="Kierunek_id_kierunek" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kierunek">
+          <Key>
+            <PropertyRef Name="id_kierunek" />
+          </Key>
+          <Property Name="id_kierunek" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nazwa" Type="varchar" MaxLength="50" />
+          <Property Name="wydział" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Pracownicy">
+          <Key>
+            <PropertyRef Name="id_pracownik" />
+          </Key>
+          <Property Name="id_pracownik" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imie" Type="varchar" MaxLength="30" />
+          <Property Name="nazwisko" Type="varchar" MaxLength="30" />
+          <Property Name="rok_urodzenia" Type="int" />
+          <Property Name="obecnosc_dzieci" Type="bit" />
+          <Property Name="ile_dzieci" Type="int" />
+          <Property Name="plec" Type="varchar" MaxLength="1" />
+          <Property Name="czy_wykladowca" Type="bit" />
+          <Property Name="kategoria" Type="varchar" MaxLength="30" />
+          <Property Name="stopien" Type="varchar" MaxLength="30" />
+          <Property Name="login" Type="varchar" MaxLength="30" />
+          <Property Name="haslo" Type="varchar" MaxLength="30" />
+          <Property Name="Katedra_id_katedra" Type="int" Nullable="false" />
+          <Property Name="Przedmioty_id_przedmiot" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Przedmioty">
+          <Key>
+            <PropertyRef Name="id_przedmiot" />
+          </Key>
+          <Property Name="id_przedmiot" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nazwa" Type="varchar" MaxLength="50" />
+          <Property Name="ile_godzin" Type="int" />
+          <Property Name="typ_zajec" Type="varchar" MaxLength="30" />
+          <Property Name="semestr" Type="int" />
+          <Property Name="Specjalnosc_id_specjalnosc" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Specjalnosc">
+          <Key>
+            <PropertyRef Name="id_specjalnosc" />
+          </Key>
+          <Property Name="id_specjalnosc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nazwa" Type="varchar" MaxLength="50" />
+          <Property Name="stopien" Type="int" />
+          <Property Name="Katedra_id_katedra" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Studenci">
+          <Key>
+            <PropertyRef Name="Studenci_ID" />
+          </Key>
+          <Property Name="Studenci_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imie" Type="varchar" MaxLength="30" />
+          <Property Name="nazwisko" Type="varchar" MaxLength="50" />
+          <Property Name="rok_urodzenia" Type="int" />
+          <Property Name="obecnosc_dzieci" Type="bit" />
+          <Property Name="ile_dzieci" Type="int" />
+          <Property Name="plec" Type="varchar" MaxLength="1" />
+          <Property Name="grupa" Type="varchar" MaxLength="30" />
+          <Property Name="haslo" Type="varchar" MaxLength="30" />
+          <Property Name="login" Type="varchar" MaxLength="30" />
+          <Property Name="Specjalnosc_id_specjalnosc" Type="int" Nullable="false" />
+          <Property Name="Stypendium_id_stypendium" Type="int" Nullable="false" />
+          <Property Name="Katedra_id_katedra" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stypendium">
+          <Key>
+            <PropertyRef Name="id_stypendium" />
+          </Key>
+          <Property Name="id_stypendium" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rodziaj" Type="varchar" MaxLength="30" />
+          <Property Name="kwota" Type="money" />
+        </EntityType>
+        <Association Name="Katedra_Kierunek_FK">
+          <End Role="Kierunek" Type="Self.Kierunek" Multiplicity="1" />
+          <End Role="Katedra" Type="Self.Katedra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kierunek">
+              <PropertyRef Name="id_kierunek" />
+            </Principal>
+            <Dependent Role="Katedra">
+              <PropertyRef Name="Kierunek_id_kierunek" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pracownicy_Katedra_FK">
+          <End Role="Katedra" Type="Self.Katedra" Multiplicity="1" />
+          <End Role="Pracownicy" Type="Self.Pracownicy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Katedra">
+              <PropertyRef Name="id_katedra" />
+            </Principal>
+            <Dependent Role="Pracownicy">
+              <PropertyRef Name="Katedra_id_katedra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pracownicy_Przedmioty_FK">
+          <End Role="Przedmioty" Type="Self.Przedmioty" Multiplicity="1" />
+          <End Role="Pracownicy" Type="Self.Pracownicy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Przedmioty">
+              <PropertyRef Name="id_przedmiot" />
+            </Principal>
+            <Dependent Role="Pracownicy">
+              <PropertyRef Name="Przedmioty_id_przedmiot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Przedmioty_Specjalnosc_FK">
+          <End Role="Specjalnosc" Type="Self.Specjalnosc" Multiplicity="1" />
+          <End Role="Przedmioty" Type="Self.Przedmioty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specjalnosc">
+              <PropertyRef Name="id_specjalnosc" />
+            </Principal>
+            <Dependent Role="Przedmioty">
+              <PropertyRef Name="Specjalnosc_id_specjalnosc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Specjalnosc_Katedra_FK">
+          <End Role="Katedra" Type="Self.Katedra" Multiplicity="1" />
+          <End Role="Specjalnosc" Type="Self.Specjalnosc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Katedra">
+              <PropertyRef Name="id_katedra" />
+            </Principal>
+            <Dependent Role="Specjalnosc">
+              <PropertyRef Name="Katedra_id_katedra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Studenci_Katedra_FK">
+          <End Role="Katedra" Type="Self.Katedra" Multiplicity="1" />
+          <End Role="Studenci" Type="Self.Studenci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Katedra">
+              <PropertyRef Name="id_katedra" />
+            </Principal>
+            <Dependent Role="Studenci">
+              <PropertyRef Name="Katedra_id_katedra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Studenci_Specjalnosc_FK">
+          <End Role="Specjalnosc" Type="Self.Specjalnosc" Multiplicity="1" />
+          <End Role="Studenci" Type="Self.Studenci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specjalnosc">
+              <PropertyRef Name="id_specjalnosc" />
+            </Principal>
+            <Dependent Role="Studenci">
+              <PropertyRef Name="Specjalnosc_id_specjalnosc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Studenci_Stypendium_FK">
+          <End Role="Stypendium" Type="Self.Stypendium" Multiplicity="1" />
+          <End Role="Studenci" Type="Self.Studenci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stypendium">
+              <PropertyRef Name="id_stypendium" />
+            </Principal>
+            <Dependent Role="Studenci">
+              <PropertyRef Name="Stypendium_id_stypendium" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PlanyKsztalceniaModelStoreContainer">
+          <EntitySet Name="Katedra" EntityType="Self.Katedra" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kierunek" EntityType="Self.Kierunek" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pracownicy" EntityType="Self.Pracownicy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Przedmioty" EntityType="Self.Przedmioty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Specjalnosc" EntityType="Self.Specjalnosc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Studenci" EntityType="Self.Studenci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stypendium" EntityType="Self.Stypendium" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Katedra_Kierunek_FK" Association="Self.Katedra_Kierunek_FK">
+            <End Role="Kierunek" EntitySet="Kierunek" />
+            <End Role="Katedra" EntitySet="Katedra" />
+          </AssociationSet>
+          <AssociationSet Name="Pracownicy_Katedra_FK" Association="Self.Pracownicy_Katedra_FK">
+            <End Role="Katedra" EntitySet="Katedra" />
+            <End Role="Pracownicy" EntitySet="Pracownicy" />
+          </AssociationSet>
+          <AssociationSet Name="Pracownicy_Przedmioty_FK" Association="Self.Pracownicy_Przedmioty_FK">
+            <End Role="Przedmioty" EntitySet="Przedmioty" />
+            <End Role="Pracownicy" EntitySet="Pracownicy" />
+          </AssociationSet>
+          <AssociationSet Name="Przedmioty_Specjalnosc_FK" Association="Self.Przedmioty_Specjalnosc_FK">
+            <End Role="Specjalnosc" EntitySet="Specjalnosc" />
+            <End Role="Przedmioty" EntitySet="Przedmioty" />
+          </AssociationSet>
+          <AssociationSet Name="Specjalnosc_Katedra_FK" Association="Self.Specjalnosc_Katedra_FK">
+            <End Role="Katedra" EntitySet="Katedra" />
+            <End Role="Specjalnosc" EntitySet="Specjalnosc" />
+          </AssociationSet>
+          <AssociationSet Name="Studenci_Katedra_FK" Association="Self.Studenci_Katedra_FK">
+            <End Role="Katedra" EntitySet="Katedra" />
+            <End Role="Studenci" EntitySet="Studenci" />
+          </AssociationSet>
+          <AssociationSet Name="Studenci_Specjalnosc_FK" Association="Self.Studenci_Specjalnosc_FK">
+            <End Role="Specjalnosc" EntitySet="Specjalnosc" />
+            <End Role="Studenci" EntitySet="Studenci" />
+          </AssociationSet>
+          <AssociationSet Name="Studenci_Stypendium_FK" Association="Self.Studenci_Stypendium_FK">
+            <End Role="Stypendium" EntitySet="Stypendium" />
+            <End Role="Studenci" EntitySet="Studenci" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PlanyKsztalceniaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Katedra">
+          <Key>
+            <PropertyRef Name="id_katedra" />
+          </Key>
+          <Property Name="id_katedra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Kierunek_id_kierunek" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kierunek" Relationship="Self.Katedra_Kierunek_FK" FromRole="Katedra" ToRole="Kierunek" />
+          <NavigationProperty Name="Pracownicy" Relationship="Self.Pracownicy_Katedra_FK" FromRole="Katedra" ToRole="Pracownicy" />
+          <NavigationProperty Name="Specjalnosc" Relationship="Self.Specjalnosc_Katedra_FK" FromRole="Katedra" ToRole="Specjalnosc" />
+          <NavigationProperty Name="Studenci" Relationship="Self.Studenci_Katedra_FK" FromRole="Katedra" ToRole="Studenci" />
+        </EntityType>
+        <EntityType Name="Kierunek">
+          <Key>
+            <PropertyRef Name="id_kierunek" />
+          </Key>
+          <Property Name="id_kierunek" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="wydział" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Katedra" Relationship="Self.Katedra_Kierunek_FK" FromRole="Kierunek" ToRole="Katedra" />
+        </EntityType>
+        <EntityType Name="Pracownicy">
+          <Key>
+            <PropertyRef Name="id_pracownik" />
+          </Key>
+          <Property Name="id_pracownik" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="imie" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="nazwisko" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="rok_urodzenia" Type="Int32" />
+          <Property Name="obecnosc_dzieci" Type="Boolean" />
+          <Property Name="ile_dzieci" Type="Int32" />
+          <Property Name="plec" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="czy_wykladowca" Type="Boolean" />
+          <Property Name="kategoria" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="stopien" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="login" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="haslo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Katedra_id_katedra" Type="Int32" Nullable="false" />
+          <Property Name="Przedmioty_id_przedmiot" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Katedra" Relationship="Self.Pracownicy_Katedra_FK" FromRole="Pracownicy" ToRole="Katedra" />
+          <NavigationProperty Name="Przedmioty" Relationship="Self.Pracownicy_Przedmioty_FK" FromRole="Pracownicy" ToRole="Przedmioty" />
+        </EntityType>
+        <EntityType Name="Przedmioty">
+          <Key>
+            <PropertyRef Name="id_przedmiot" />
+          </Key>
+          <Property Name="id_przedmiot" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ile_godzin" Type="Int32" />
+          <Property Name="typ_zajec" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="semestr" Type="Int32" />
+          <Property Name="Specjalnosc_id_specjalnosc" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pracownicy" Relationship="Self.Pracownicy_Przedmioty_FK" FromRole="Przedmioty" ToRole="Pracownicy" />
+          <NavigationProperty Name="Specjalnosc" Relationship="Self.Przedmioty_Specjalnosc_FK" FromRole="Przedmioty" ToRole="Specjalnosc" />
+        </EntityType>
+        <EntityType Name="Specjalnosc">
+          <Key>
+            <PropertyRef Name="id_specjalnosc" />
+          </Key>
+          <Property Name="id_specjalnosc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="stopien" Type="Int32" />
+          <Property Name="Katedra_id_katedra" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Katedra" Relationship="Self.Specjalnosc_Katedra_FK" FromRole="Specjalnosc" ToRole="Katedra" />
+          <NavigationProperty Name="Przedmioty" Relationship="Self.Przedmioty_Specjalnosc_FK" FromRole="Specjalnosc" ToRole="Przedmioty" />
+          <NavigationProperty Name="Studenci" Relationship="Self.Studenci_Specjalnosc_FK" FromRole="Specjalnosc" ToRole="Studenci" />
+        </EntityType>
+        <EntityType Name="Studenci">
+          <Key>
+            <PropertyRef Name="Studenci_ID" />
+          </Key>
+          <Property Name="Studenci_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="imie" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="nazwisko" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rok_urodzenia" Type="Int32" />
+          <Property Name="obecnosc_dzieci" Type="Boolean" />
+          <Property Name="ile_dzieci" Type="Int32" />
+          <Property Name="plec" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="grupa" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="haslo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="login" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Specjalnosc_id_specjalnosc" Type="Int32" Nullable="false" />
+          <Property Name="Stypendium_id_stypendium" Type="Int32" Nullable="false" />
+          <Property Name="Katedra_id_katedra" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Katedra" Relationship="Self.Studenci_Katedra_FK" FromRole="Studenci" ToRole="Katedra" />
+          <NavigationProperty Name="Specjalnosc" Relationship="Self.Studenci_Specjalnosc_FK" FromRole="Studenci" ToRole="Specjalnosc" />
+          <NavigationProperty Name="Stypendium" Relationship="Self.Studenci_Stypendium_FK" FromRole="Studenci" ToRole="Stypendium" />
+        </EntityType>
+        <EntityType Name="Stypendium">
+          <Key>
+            <PropertyRef Name="id_stypendium" />
+          </Key>
+          <Property Name="id_stypendium" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rodziaj" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="kwota" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Studenci" Relationship="Self.Studenci_Stypendium_FK" FromRole="Stypendium" ToRole="Studenci" />
+        </EntityType>
+        <Association Name="Katedra_Kierunek_FK">
+          <End Role="Kierunek" Type="Self.Kierunek" Multiplicity="1" />
+          <End Role="Katedra" Type="Self.Katedra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kierunek">
+              <PropertyRef Name="id_kierunek" />
+            </Principal>
+            <Dependent Role="Katedra">
+              <PropertyRef Name="Kierunek_id_kierunek" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pracownicy_Katedra_FK">
+          <End Role="Katedra" Type="Self.Katedra" Multiplicity="1" />
+          <End Role="Pracownicy" Type="Self.Pracownicy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Katedra">
+              <PropertyRef Name="id_katedra" />
+            </Principal>
+            <Dependent Role="Pracownicy">
+              <PropertyRef Name="Katedra_id_katedra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Specjalnosc_Katedra_FK">
+          <End Role="Katedra" Type="Self.Katedra" Multiplicity="1" />
+          <End Role="Specjalnosc" Type="Self.Specjalnosc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Katedra">
+              <PropertyRef Name="id_katedra" />
+            </Principal>
+            <Dependent Role="Specjalnosc">
+              <PropertyRef Name="Katedra_id_katedra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Studenci_Katedra_FK">
+          <End Role="Katedra" Type="Self.Katedra" Multiplicity="1" />
+          <End Role="Studenci" Type="Self.Studenci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Katedra">
+              <PropertyRef Name="id_katedra" />
+            </Principal>
+            <Dependent Role="Studenci">
+              <PropertyRef Name="Katedra_id_katedra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pracownicy_Przedmioty_FK">
+          <End Role="Przedmioty" Type="Self.Przedmioty" Multiplicity="1" />
+          <End Role="Pracownicy" Type="Self.Pracownicy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Przedmioty">
+              <PropertyRef Name="id_przedmiot" />
+            </Principal>
+            <Dependent Role="Pracownicy">
+              <PropertyRef Name="Przedmioty_id_przedmiot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Przedmioty_Specjalnosc_FK">
+          <End Role="Specjalnosc" Type="Self.Specjalnosc" Multiplicity="1" />
+          <End Role="Przedmioty" Type="Self.Przedmioty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specjalnosc">
+              <PropertyRef Name="id_specjalnosc" />
+            </Principal>
+            <Dependent Role="Przedmioty">
+              <PropertyRef Name="Specjalnosc_id_specjalnosc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Studenci_Specjalnosc_FK">
+          <End Role="Specjalnosc" Type="Self.Specjalnosc" Multiplicity="1" />
+          <End Role="Studenci" Type="Self.Studenci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specjalnosc">
+              <PropertyRef Name="id_specjalnosc" />
+            </Principal>
+            <Dependent Role="Studenci">
+              <PropertyRef Name="Specjalnosc_id_specjalnosc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Studenci_Stypendium_FK">
+          <End Role="Stypendium" Type="Self.Stypendium" Multiplicity="1" />
+          <End Role="Studenci" Type="Self.Studenci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stypendium">
+              <PropertyRef Name="id_stypendium" />
+            </Principal>
+            <Dependent Role="Studenci">
+              <PropertyRef Name="Stypendium_id_stypendium" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PlanyKsztalceniaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Katedra" EntityType="Self.Katedra" />
+          <EntitySet Name="Kierunek" EntityType="Self.Kierunek" />
+          <EntitySet Name="Pracownicy" EntityType="Self.Pracownicy" />
+          <EntitySet Name="Przedmioty" EntityType="Self.Przedmioty" />
+          <EntitySet Name="Specjalnosc" EntityType="Self.Specjalnosc" />
+          <EntitySet Name="Studenci" EntityType="Self.Studenci" />
+          <EntitySet Name="Stypendium" EntityType="Self.Stypendium" />
+          <AssociationSet Name="Katedra_Kierunek_FK" Association="Self.Katedra_Kierunek_FK">
+            <End Role="Kierunek" EntitySet="Kierunek" />
+            <End Role="Katedra" EntitySet="Katedra" />
+          </AssociationSet>
+          <AssociationSet Name="Pracownicy_Katedra_FK" Association="Self.Pracownicy_Katedra_FK">
+            <End Role="Katedra" EntitySet="Katedra" />
+            <End Role="Pracownicy" EntitySet="Pracownicy" />
+          </AssociationSet>
+          <AssociationSet Name="Specjalnosc_Katedra_FK" Association="Self.Specjalnosc_Katedra_FK">
+            <End Role="Katedra" EntitySet="Katedra" />
+            <End Role="Specjalnosc" EntitySet="Specjalnosc" />
+          </AssociationSet>
+          <AssociationSet Name="Studenci_Katedra_FK" Association="Self.Studenci_Katedra_FK">
+            <End Role="Katedra" EntitySet="Katedra" />
+            <End Role="Studenci" EntitySet="Studenci" />
+          </AssociationSet>
+          <AssociationSet Name="Pracownicy_Przedmioty_FK" Association="Self.Pracownicy_Przedmioty_FK">
+            <End Role="Przedmioty" EntitySet="Przedmioty" />
+            <End Role="Pracownicy" EntitySet="Pracownicy" />
+          </AssociationSet>
+          <AssociationSet Name="Przedmioty_Specjalnosc_FK" Association="Self.Przedmioty_Specjalnosc_FK">
+            <End Role="Specjalnosc" EntitySet="Specjalnosc" />
+            <End Role="Przedmioty" EntitySet="Przedmioty" />
+          </AssociationSet>
+          <AssociationSet Name="Studenci_Specjalnosc_FK" Association="Self.Studenci_Specjalnosc_FK">
+            <End Role="Specjalnosc" EntitySet="Specjalnosc" />
+            <End Role="Studenci" EntitySet="Studenci" />
+          </AssociationSet>
+          <AssociationSet Name="Studenci_Stypendium_FK" Association="Self.Studenci_Stypendium_FK">
+            <End Role="Stypendium" EntitySet="Stypendium" />
+            <End Role="Studenci" EntitySet="Studenci" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PlanyKsztalceniaModelStoreContainer" CdmEntityContainer="PlanyKsztalceniaEntities">
+          <EntitySetMapping Name="Katedra">
+            <EntityTypeMapping TypeName="PlanyKsztalceniaModel.Katedra">
+              <MappingFragment StoreEntitySet="Katedra">
+                <ScalarProperty Name="id_katedra" ColumnName="id_katedra" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+                <ScalarProperty Name="Kierunek_id_kierunek" ColumnName="Kierunek_id_kierunek" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kierunek">
+            <EntityTypeMapping TypeName="PlanyKsztalceniaModel.Kierunek">
+              <MappingFragment StoreEntitySet="Kierunek">
+                <ScalarProperty Name="id_kierunek" ColumnName="id_kierunek" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+                <ScalarProperty Name="wydział" ColumnName="wydział" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pracownicy">
+            <EntityTypeMapping TypeName="PlanyKsztalceniaModel.Pracownicy">
+              <MappingFragment StoreEntitySet="Pracownicy">
+                <ScalarProperty Name="id_pracownik" ColumnName="id_pracownik" />
+                <ScalarProperty Name="imie" ColumnName="imie" />
+                <ScalarProperty Name="nazwisko" ColumnName="nazwisko" />
+                <ScalarProperty Name="rok_urodzenia" ColumnName="rok_urodzenia" />
+                <ScalarProperty Name="obecnosc_dzieci" ColumnName="obecnosc_dzieci" />
+                <ScalarProperty Name="ile_dzieci" ColumnName="ile_dzieci" />
+                <ScalarProperty Name="plec" ColumnName="plec" />
+                <ScalarProperty Name="czy_wykladowca" ColumnName="czy_wykladowca" />
+                <ScalarProperty Name="kategoria" ColumnName="kategoria" />
+                <ScalarProperty Name="stopien" ColumnName="stopien" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="haslo" ColumnName="haslo" />
+                <ScalarProperty Name="Katedra_id_katedra" ColumnName="Katedra_id_katedra" />
+                <ScalarProperty Name="Przedmioty_id_przedmiot" ColumnName="Przedmioty_id_przedmiot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Przedmioty">
+            <EntityTypeMapping TypeName="PlanyKsztalceniaModel.Przedmioty">
+              <MappingFragment StoreEntitySet="Przedmioty">
+                <ScalarProperty Name="id_przedmiot" ColumnName="id_przedmiot" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+                <ScalarProperty Name="ile_godzin" ColumnName="ile_godzin" />
+                <ScalarProperty Name="typ_zajec" ColumnName="typ_zajec" />
+                <ScalarProperty Name="semestr" ColumnName="semestr" />
+                <ScalarProperty Name="Specjalnosc_id_specjalnosc" ColumnName="Specjalnosc_id_specjalnosc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Specjalnosc">
+            <EntityTypeMapping TypeName="PlanyKsztalceniaModel.Specjalnosc">
+              <MappingFragment StoreEntitySet="Specjalnosc">
+                <ScalarProperty Name="id_specjalnosc" ColumnName="id_specjalnosc" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+                <ScalarProperty Name="stopien" ColumnName="stopien" />
+                <ScalarProperty Name="Katedra_id_katedra" ColumnName="Katedra_id_katedra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Studenci">
+            <EntityTypeMapping TypeName="PlanyKsztalceniaModel.Studenci">
+              <MappingFragment StoreEntitySet="Studenci">
+                <ScalarProperty Name="Studenci_ID" ColumnName="Studenci_ID" />
+                <ScalarProperty Name="imie" ColumnName="imie" />
+                <ScalarProperty Name="nazwisko" ColumnName="nazwisko" />
+                <ScalarProperty Name="rok_urodzenia" ColumnName="rok_urodzenia" />
+                <ScalarProperty Name="obecnosc_dzieci" ColumnName="obecnosc_dzieci" />
+                <ScalarProperty Name="ile_dzieci" ColumnName="ile_dzieci" />
+                <ScalarProperty Name="plec" ColumnName="plec" />
+                <ScalarProperty Name="grupa" ColumnName="grupa" />
+                <ScalarProperty Name="haslo" ColumnName="haslo" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="Specjalnosc_id_specjalnosc" ColumnName="Specjalnosc_id_specjalnosc" />
+                <ScalarProperty Name="Stypendium_id_stypendium" ColumnName="Stypendium_id_stypendium" />
+                <ScalarProperty Name="Katedra_id_katedra" ColumnName="Katedra_id_katedra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stypendium">
+            <EntityTypeMapping TypeName="PlanyKsztalceniaModel.Stypendium">
+              <MappingFragment StoreEntitySet="Stypendium">
+                <ScalarProperty Name="id_stypendium" ColumnName="id_stypendium" />
+                <ScalarProperty Name="rodziaj" ColumnName="rodziaj" />
+                <ScalarProperty Name="kwota" ColumnName="kwota" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
