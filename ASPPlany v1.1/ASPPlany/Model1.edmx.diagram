@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2e489ebc4bbd4a0289c002e0b0baf591" Name="Diagram1">
+        <EntityTypeShape EntityType="PlanyKsztalceniaModel.Katedra" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanyKsztalceniaModel.Kierunek" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanyKsztalceniaModel.Pracownicy" Width="1.5" PointX="9.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanyKsztalceniaModel.Przedmioty" Width="1.5" PointX="7.5" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanyKsztalceniaModel.Specjalnosc" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanyKsztalceniaModel.Studenci" Width="1.5" PointX="7.5" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanyKsztalceniaModel.Stypendium" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
+        <AssociationConnector Association="PlanyKsztalceniaModel.Katedra_Kierunek_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanyKsztalceniaModel.Pracownicy_Katedra_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanyKsztalceniaModel.Specjalnosc_Katedra_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanyKsztalceniaModel.Studenci_Katedra_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanyKsztalceniaModel.Pracownicy_Przedmioty_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanyKsztalceniaModel.Przedmioty_Specjalnosc_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanyKsztalceniaModel.Studenci_Specjalnosc_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanyKsztalceniaModel.Studenci_Stypendium_FK" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
